@@ -3,7 +3,8 @@ import { AddContactForm } from './AddContactForm/AddContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { nanoid } from 'nanoid';
-// import initialItems from ???
+import { MainContainer, SubTitle, Title } from './App.styled';
+import { GlobalStyle } from './GlobalStyles';
 
 export class App extends Component {
   state = {
@@ -14,8 +15,6 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
   addContact = newContact => {
@@ -46,8 +45,8 @@ export class App extends Component {
     }));
   };
 
-  handleFilterChange = event => {
-    this.setState({ filter: event.target.value });
+  handleFilterChange = evt => {
+    this.setState({ filter: evt.target.value });
   };
 
   getFilteredContacts = () => {
@@ -62,16 +61,17 @@ export class App extends Component {
   render() {
     const filteredContacts = this.getFilteredContacts();
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <MainContainer>
+        <Title>Phonebook</Title>
         <AddContactForm onAdd={this.addContact} />
-        <h2>Contacts</h2>
+        <SubTitle>Contacts</SubTitle>
         <Filter value={this.state.filter} onChange={this.handleFilterChange} />
         <ContactList
           contacts={filteredContacts}
           onDelete={this.deleteContact}
         />
-      </div>
+        <GlobalStyle />
+      </MainContainer>
     );
   }
 }

@@ -1,7 +1,13 @@
-import { Formik, Field } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { StyledForm, Label, ErrorMsg } from './AddContactForm.styled';
+import {
+  StyledForm,
+  Label,
+  ErrorMsg,
+  SubmitBtn,
+  StyledField,
+} from './AddContactForm.styled';
 
 const phonePattern = /^\d{3}-\d{2}-\d{2}$/;
 
@@ -26,25 +32,35 @@ export const AddContactForm = ({ onAdd }) => {
         }}
         validationSchema={FormSchema}
         onSubmit={(values, actions) => {
-            onAdd(values);
-            actions.resetForm();
+          onAdd(values);
+          actions.resetForm();
         }}
       >
-        <StyledForm>
-          <Label>
-            Name
-            <Field name="name" type="text" />
-            <ErrorMsg name="name" component="div" />
-          </Label>
+        {({ errors, touched }) => (
+          <StyledForm>
+            <Label>
+              Name
+              <StyledField
+                name="name"
+                type="text"
+                hasError={touched.name && errors.name}
+              />
+              <ErrorMsg name="name" component="div" />
+            </Label>
 
-          <Label>
-            Number
-            <Field name="number" type="tel" />
-            <ErrorMsg name="number" component="div" />
-          </Label>
+            <Label>
+              Number
+              <StyledField
+                name="number"
+                type="tel"
+                hasError={touched.number && errors.number}
+              />
+              <ErrorMsg name="number" component="div" />
+            </Label>
 
-          <button type="submit">Add contact</button>
-        </StyledForm>
+            <SubmitBtn type="submit">Add contact</SubmitBtn>
+          </StyledForm>
+        )}
       </Formik>
     </div>
   );
